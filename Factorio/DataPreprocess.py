@@ -1,10 +1,10 @@
 import json
 import pickle
 
-from attr import field
 
 RECIPE_PATH = "local/recipe.json"
 ITEMS_PATH = "local/item_map"
+ITEMS_JSON_PATH = "local/item_map.json"
 with open(RECIPE_PATH, "rb") as f:
     recipes = json.load(f)
 
@@ -65,13 +65,23 @@ def CreateItemList(recipes: list) -> dict:
                 items[name] = []
         c += 1
     return items
+
+
+items_json = {}
+for k, v in CreateItemList(recipes).items():
+    new_recipes = []
+    for recipe in v:
+        json_recipe = {"name": recipe.name, "result": recipe.result, "ingredients": recipe.ingredients}
+        new_recipes.append(json_recipe)
+    items_json[k] = new_recipes
+
 if __name__ == "__main__":
     items = CreateItemList(recipes)
-    with open(ITEMS_PATH, "wb") as f:
-        pickle.dump(items, file=f)
+    with open(ITEMS_JSON_PATH, "w") as f:
+        json.dump(items_json, f)
 
 
     # with open(ITEMS_PATH, "rb") as f:
     #     items = pickle.load(file=f)
 
-    print(len(items.keys()))
+    print(items.keys())

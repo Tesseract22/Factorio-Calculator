@@ -1,12 +1,11 @@
 import pickle
 
-from numpy import double
 from DataPreprocess import Recipe
 
 
 RECIPE_PATH = "local/recipe.json"
 ITEMS_PATH = "local/item_map"
-
+ITEMS_JSON_PATH = "local/item_map.json"
 with open(ITEMS_PATH, "rb") as f:
     items = pickle.load(file=f)
 
@@ -18,6 +17,7 @@ for k, v in items.items():
 # Produce 
 class ItemNode:
         def __init__(self, name:str, amount) -> None:
+            
             self.name = name
             self.amount = amount
             self.parents = {}
