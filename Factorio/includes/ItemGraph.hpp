@@ -12,6 +12,7 @@ using namespace std;
 
 class ItemGraph {
     public:
+        ItemGraph() {}
         ItemGraph(string name, float amount): root_(make_shared<ItemNode>(name, amount)) {}
         shared_ptr<ItemNode> root_;
         void GraphToCSV();

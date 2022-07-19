@@ -3,7 +3,7 @@
 #include "Preprocess.hpp"
 #include <iostream>
 #include <string>
-
+#include <stdexcept>
 
 using namespace std;
 
@@ -18,8 +18,12 @@ int main() {
     map<string, list<Recipe>> item_map = Reader::ReadItem();
     
     Calculator cal{item_map};
-
-    auto graph = cal.ProduceWithGraph(item, amount);
+    ItemGraph graph;
+    try {
+        graph = cal.ProduceWithGraph(item, amount);
+    } catch(out_of_range& e) {
+        cout << "Error: No Item named " << item;
+    }
     cout << graph.GraphToString();
     
 }
