@@ -1,0 +1,39 @@
+{%extends "base.html" %}
+
+{% block mainbody %}
+<p> Search for an item...
+    <form action="/search-post/" method="post">
+        {% csrf_token %}
+        Enter item: <input type="text" list="items" name="item_name" value="{{ item_name }}" autocomplete="off">
+        {% if error %}
+        {{ error }}
+        {% endif %}
+        <br><br/>
+        <datalist id="items">
+            {% for item in items %}
+                <option value="{{ item }}"></option>
+            {% endfor %}
+        </datalist>
+        Enter amount: <input type="text" name="amount" value="{{ amount }}">
+        <input type="submit" value="Calculate", name="display_but">
+        <input type="submit" value="Download", name="download_but">
+        
+    </form>
+
+</p>
+<p>
+    {% if csv_file %}
+        <a hred={{ csv_file }}>Download as CSV</a>
+    {% endif %}
+    <table>
+        {% for row in res_csv %}
+            <tr>
+                {% for cell in row %}
+                    <td>{{ cell }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</p>
+
+{% endblock %}
